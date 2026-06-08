@@ -35,7 +35,7 @@ const LoginPage = () => {
       setSsoLoginErrorMessage(undefined);
       setIsSsoLoggingIn(true);
       try {
-        const result = await getBackendSrv().post<LoginDTO>('/api/sso/login', formModel, { showErrorAlert: false });
+        const result = await getBackendSrv().post<LoginDTO>('/sso/login', formModel, { showErrorAlert: false });
         setIsSsoLoggingIn(false);
         if (result?.redirectUrl) {
           if (config.appSubUrl !== '' && !result.redirectUrl.startsWith(config.appSubUrl)) {
