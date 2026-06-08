@@ -125,6 +125,9 @@ export class GrafanaBootConfig {
   secureSocksDSProxyEnabled = false;
   samlEnabled = false;
   samlName = '';
+  ssoEnabled = false;
+  ssoName = '';
+  ssoRsaPublicKey = '';
   autoAssignOrg = true;
   verifyEmailEnabled = false;
   oauth: OAuthSettings = {};

@@ -252,6 +252,9 @@ export interface GrafanaConfig {
   azureAuthEnabled: boolean;
   samlEnabled: boolean;
   samlName: string;
+  ssoEnabled: boolean;
+  ssoName: string;
+  ssoRsaPublicKey: string;
   awsAllowedAuthProviders: string[];
   awsAssumeRoleProvided: boolean;
   autoAssignOrg: boolean;
