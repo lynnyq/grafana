@@ -1,0 +1,39 @@
+{
+  "type": "datasource",
+  "name": "rqlite",
+  "id": "grafana-rqlite-datasource",
+  "executable": "gpx_grafana-rqlite-datasource",
+  "aliasIDs": ["rqlite"],
+  "category": "sql",
+
+  "info": {
+    "description": "Data source for rqlite, the distributed relational database built on SQLite",
+    "author": {
+      "name": "Grafana Labs",
+      "url": "https://grafana.com"
+    },
+    "logos": {
+      "small": "img/rqlite_logo.svg",
+      "large": "img/rqlite_logo.svg"
+    },
+    "version": "%VERSION%",
+    "links": [
+      { "name": "rqlite Documentation", "url": "https://rqlite.io/docs/" },
+      { "name": "Raise issue", "url": "https://github.com/grafana/grafana/issues/new" }
+    ]
+  },
+  "dependencies": {
+    "grafanaDependency": ">=12.3.0",
+    "plugins": []
+  },
+
+  "alerting": true,
+  "annotations": true,
+  "metrics": true,
+  "logs": true,
+  "backend": true,
+
+  "queryOptions": {
+    "minInterval": true
+  }
+}
