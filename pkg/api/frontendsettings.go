@@ -359,6 +359,9 @@ func (hs *HTTPServer) getFrontendSettings(c *contextmodel.ReqContext) (*dtos.Fro
 		Oauth:                   hs.getEnabledOAuthProviders(),
 		SamlEnabled:             hs.samlEnabled(),
 		SamlName:                hs.samlName(),
+		SsoEnabled:              hs.Cfg.SSOAuth.Enabled,
+		SsoName:                 hs.Cfg.SSOAuth.Name,
+		SsoRsaPublicKey:         hs.Cfg.SSOAuth.RSAPublicKey,
 		TokenExpirationDayLimit: hs.Cfg.SATokenExpirationDayLimit,
 
 		SnapshotEnabled: hs.Cfg.SnapshotEnabled,

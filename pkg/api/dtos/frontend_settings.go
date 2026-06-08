@@ -283,6 +283,9 @@ type FrontendSettingsDTO struct {
 	Oauth                   map[string]any                     `json:"oauth"`
 	SamlEnabled             bool                               `json:"samlEnabled"`
 	SamlName                string                             `json:"samlName"`
+	SsoEnabled              bool                               `json:"ssoEnabled"`
+	SsoName                 string                             `json:"ssoName"`
+	SsoRsaPublicKey         string                             `json:"ssoRsaPublicKey,omitempty"`
 	TokenExpirationDayLimit int                                `json:"tokenExpirationDayLimit"`
 	SharedWithMeFolderUID   string                             `json:"sharedWithMeFolderUID"`
 	RootFolderUID           string                             `json:"rootFolderUID"`

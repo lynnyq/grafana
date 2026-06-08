@@ -33,6 +33,7 @@ const (
 	OktaProviderName       = "okta"
 	SAMLProviderName       = "saml"
 	LDAPProviderName       = "ldap"
+	SSOProviderName        = "sso"
 )
 
 var SocialBaseUrl = "/login/"

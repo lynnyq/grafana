@@ -578,6 +578,9 @@ type Cfg struct {
 	SAMLSkipOrgRoleSync        bool
 	SAMLRoleValuesGrafanaAdmin string
 
+	// SSO Auth
+	SSOAuth SSOAuthSettings
+
 	// OAuth2 Server
 	OAuth2ServerEnabled bool
 
@@ -1661,6 +1664,7 @@ func (cfg *Cfg) parseINIFile(iniFile *ini.File) error {
 
 	cfg.readSAMLConfig()
 	cfg.readLDAPConfig()
+	cfg.readSSOAuthSettings()
 	cfg.handleAWSConfig()
 	cfg.readAzureSettings()
 	cfg.readAuthJWTSettings()

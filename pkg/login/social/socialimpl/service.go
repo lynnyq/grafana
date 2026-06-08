@@ -54,8 +54,8 @@ func ProvideService(cfg *setting.Cfg,
 	}
 
 	for _, ssoSetting := range allSettings {
-		// ignore non-oauth2 providers
-		if !slices.Contains(ssosettings.AllOAuthProviders, ssoSetting.Provider) {
+		// ignore non-oauth2 providers and SSO provider
+		if !slices.Contains(ssosettings.AllOAuthProviders, ssoSetting.Provider) && ssoSetting.Provider != social.SSOProviderName {
 			continue
 		}
 
@@ -215,6 +215,8 @@ func createOAuthConnector(name string, info *social.OAuthInfo, cfg *setting.Cfg,
 		return connectors.NewGrafanaComProvider(info, cfg, orgRoleMapper, ssoSettings, features), nil
 	case social.OktaProviderName:
 		return connectors.NewOktaProvider(info, cfg, orgRoleMapper, ssoSettings, features, cache), nil
+	case social.SSOProviderName:
+		return connectors.NewSSOProvider(info, cfg), nil
 	default:
 		return nil, fmt.Errorf("unknown oauth provider: %s", name)
 	}
