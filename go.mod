@@ -722,7 +722,10 @@ require (
 
 require github.com/redis/go-redis/extra/redisotel/v9 v9.19.0 // @grafana/grafana-operator-experience-squad
 
-require github.com/redis/go-redis/extra/rediscmd/v9 v9.19.0 // indirect
+require (
+	github.com/redis/go-redis/extra/rediscmd/v9 v9.19.0 // indirect
+	github.com/rqlite/gorqlite v0.0.0-20260504155303-50d445fd0ab9 // indirect
+)
 
 replace (
 	// Use fork of crewjam/saml with fixes for some issues until changes get merged into upstream

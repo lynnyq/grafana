@@ -22,6 +22,7 @@ import (
 	"github.com/grafana/grafana/pkg/tsdb/cloudwatch"
 	postgres "github.com/grafana/grafana/pkg/tsdb/grafana-postgresql-datasource"
 	pyroscope "github.com/grafana/grafana/pkg/tsdb/grafana-pyroscope-datasource"
+	rqlite "github.com/grafana/grafana/pkg/tsdb/grafana-rqlite-datasource"
 	testdatasource "github.com/grafana/grafana/pkg/tsdb/grafana-testdata-datasource"
 	"github.com/grafana/grafana/pkg/tsdb/grafanads"
 	"github.com/grafana/grafana/pkg/tsdb/graphite"
@@ -55,6 +56,7 @@ const (
 	Pyroscope       = "grafana-pyroscope-datasource"
 	Parca           = "parca"
 	Jaeger          = "jaeger"
+	Rqlite          = "grafana-rqlite-datasource"
 )
 
 func init() {
@@ -97,7 +99,8 @@ func ProvideCoreProvider(coreRegistry *Registry) plugins.BackendFactoryProvider 
 func ProvideCoreRegistry(tracer trace.Tracer, am *azuremonitor.Service, cw *cloudwatch.Service, cm *cloudmonitoring.Service,
 	grap *graphite.Service, idb *influxdb.Service, lk *loki.Service, otsdb *opentsdb.Service,
 	pr *prometheus.Service, t *tempo.Service, td *testdatasource.Service, pg *postgres.Service, my *mysql.Service,
-	ms *mssql.Service, graf *grafanads.Service, pyroscope *pyroscope.Service, parca *parca.Service, jaeger *jaeger.Service) *Registry {
+	ms *mssql.Service, graf *grafanads.Service, pyroscope *pyroscope.Service, parca *parca.Service, jaeger *jaeger.Service,
+	rq *rqlite.Service) *Registry {
 	// Non-optimal global solution to replace plugin SDK default tracer for core plugins.
 	sdktracing.InitDefaultTracer(tracer)
 
@@ -119,6 +122,7 @@ func ProvideCoreRegistry(tracer trace.Tracer, am *azuremonitor.Service, cw *clou
 		Pyroscope:       asBackendPlugin(pyroscope),
 		Parca:           asBackendPlugin(parca),
 		Jaeger:          asBackendPlugin(jaeger),
+		Rqlite:          asBackendPlugin(rq),
 	})
 }
 
@@ -248,6 +252,8 @@ func NewPlugin(pluginID string, httpClientProvider *httpclient.Provider, tracer 
 		svc = parca.ProvideService(httpClientProvider)
 	case Jaeger:
 		svc = jaeger.ProvideService(httpClientProvider)
+	case Rqlite:
+		svc = rqlite.ProvideService()
 	default:
 		return nil, ErrCorePluginNotFound
 	}

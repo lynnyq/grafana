@@ -5,7 +5,6 @@ import { type GrafanaTheme2 } from '@grafana/data';
 import { type SceneComponentProps } from '@grafana/scenes';
 import { useStyles2 } from '@grafana/ui';
 
-import { PanelEditPanelWrapper } from '../PanelEditPanelWrapper';
 import { type PanelEditor } from '../PanelEditor';
 import { QueryEditorBanner } from '../QueryEditorBanner';
 
@@ -31,7 +30,7 @@ export function VizAndDataPaneNext({ model }: SceneComponentProps<PanelEditor>) 
         </div>
       )}
       <div className={cx(styles.viz, { [styles.fixedSizeViz]: layout.isScrollingLayout })}>
-        <PanelEditPanelWrapper panel={scene.panel} tableView={scene.tableView} dashboard={scene.dashboard} />
+        <scene.panelToShow.Component model={scene.panelToShow} />
         {nextDataPane && (
           <div className={styles.vizResizeHandle}>
             <div

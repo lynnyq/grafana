@@ -19,37 +19,28 @@ export class SoloPanelContextWithPathIdFilter implements SoloPanelContextValue {
   public constructor(public keyPath: string) {}
 
   public matches(panel: VizPanel): boolean {
-    let found = false;
-
     // Check if keyPath is just an old legacy panel id
-    if (/^\d+$/.test(this.keyPath) && `panel-${this.keyPath}` === panel.state.key!) {
-      found = true;
-    } else if (this.keyPath === panel.getPathId()) {
-      found = true;
+    if (/^\d+$/.test(this.keyPath)) {
+      if (`panel-${this.keyPath}` === panel.state.key!) {
+        this.matchFound = true;
+        if (!this.matchedPanels.includes(panel)) {
+          this.matchedPanels.push(panel);
+        }
+        return true;
+      }
+
+      return false;
     }
 
-    if (found) {
+    if (this.keyPath === panel.getPathId()) {
       this.matchFound = true;
       if (!this.matchedPanels.includes(panel)) {
         this.matchedPanels.push(panel);
       }
+      return true;
     }
 
-    return found;
-  }
-}
-
-export class SoloPanelContextForPanelEdit implements SoloPanelContextValue {
-  public matchFound = false;
-  public matchedPanels: VizPanel[] = [];
-
-  public constructor(panel: VizPanel) {
-    this.matchFound = true;
-    this.matchedPanels = [panel];
-  }
-
-  public matches(panel: VizPanel): boolean {
-    return this.matchedPanels[0] === panel;
+    return false;
   }
 }
 

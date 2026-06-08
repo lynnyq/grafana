@@ -37,6 +37,7 @@ import (
 	"github.com/grafana/grafana/pkg/services/user"
 	"github.com/grafana/grafana/pkg/setting"
 	"github.com/grafana/grafana/pkg/tsdb/cloudwatch"
+	rqlite "github.com/grafana/grafana/pkg/tsdb/grafana-rqlite-datasource"
 	testdatasource "github.com/grafana/grafana/pkg/tsdb/grafana-testdata-datasource"
 	"github.com/grafana/grafana/pkg/util/testutil"
 	"github.com/grafana/grafana/pkg/web/webtest"
@@ -53,7 +54,7 @@ func TestIntegrationCallResource(t *testing.T) {
 	cfg.Azure = &azsettings.AzureSettings{}
 
 	coreRegistry := coreplugin.ProvideCoreRegistry(tracing.InitializeTracerForTest(), nil, &cloudwatch.Service{}, nil, nil, nil, nil,
-		nil, nil, nil, testdatasource.ProvideService(), nil, nil, nil, nil, nil, nil, nil)
+		nil, nil, nil, testdatasource.ProvideService(), nil, nil, nil, nil, nil, nil, nil, rqlite.ProvideService())
 
 	testCtx := pluginsintegration.CreateIntegrationTestCtx(t, cfg, coreRegistry)
 

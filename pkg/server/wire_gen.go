@@ -289,6 +289,7 @@ import (
 	"github.com/grafana/grafana/pkg/tsdb/graphite"
 	"github.com/grafana/grafana/pkg/tsdb/influxdb"
 	"github.com/grafana/grafana/pkg/tsdb/jaeger"
+	rqlite "github.com/grafana/grafana/pkg/tsdb/grafana-rqlite-datasource"
 	"github.com/grafana/grafana/pkg/tsdb/loki"
 	"github.com/grafana/grafana/pkg/tsdb/mssql"
 	"github.com/grafana/grafana/pkg/tsdb/mysql"
@@ -414,7 +415,8 @@ func Initialize(ctx context.Context, cfg *setting.Cfg, opts Options, apiOpts api
 	pyroscopeService := pyroscope.ProvideService(httpclientProvider)
 	parcaService := parca.ProvideService(httpclientProvider)
 	jaegerService := jaeger.ProvideService(httpclientProvider)
-	corepluginRegistry := coreplugin.ProvideCoreRegistry(tracer, azuremonitorService, cloudwatchService, cloudmonitoringService, graphiteService, influxdbService, lokiService, opentsdbService, prometheusService, tempoService, testdatasourceService, postgresService, mysqlService, mssqlService, grafanadsService, pyroscopeService, parcaService, jaegerService)
+	rqliteService := rqlite.ProvideService()
+	corepluginRegistry := coreplugin.ProvideCoreRegistry(tracer, azuremonitorService, cloudwatchService, cloudmonitoringService, graphiteService, influxdbService, lokiService, opentsdbService, prometheusService, tempoService, testdatasourceService, postgresService, mysqlService, mssqlService, grafanadsService, pyroscopeService, parcaService, jaegerService, rqliteService)
 	backendFactoryProvider := coreplugin.ProvideCoreProvider(corepluginRegistry)
 	processService := process.ProvideService()
 	quotaService := quotaimpl.ProvideService(ctx, sqlStore, configProvider)
@@ -1147,7 +1149,8 @@ func InitializeForTest(ctx context.Context, t sqlutil.ITestDB, testingT interfac
 	pyroscopeService := pyroscope.ProvideService(httpclientProvider)
 	parcaService := parca.ProvideService(httpclientProvider)
 	jaegerService := jaeger.ProvideService(httpclientProvider)
-	corepluginRegistry := coreplugin.ProvideCoreRegistry(tracer, azuremonitorService, cloudwatchService, cloudmonitoringService, graphiteService, influxdbService, lokiService, opentsdbService, prometheusService, tempoService, testdatasourceService, postgresService, mysqlService, mssqlService, grafanadsService, pyroscopeService, parcaService, jaegerService)
+	rqliteService := rqlite.ProvideService()
+	corepluginRegistry := coreplugin.ProvideCoreRegistry(tracer, azuremonitorService, cloudwatchService, cloudmonitoringService, graphiteService, influxdbService, lokiService, opentsdbService, prometheusService, tempoService, testdatasourceService, postgresService, mysqlService, mssqlService, grafanadsService, pyroscopeService, parcaService, jaegerService, rqliteService)
 	backendFactoryProvider := coreplugin.ProvideCoreProvider(corepluginRegistry)
 	processService := process.ProvideService()
 	quotaService := quotaimpl.ProvideService(ctx, sqlStore, configProvider)

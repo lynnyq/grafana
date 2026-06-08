@@ -31,6 +31,7 @@ import (
 	"github.com/grafana/grafana/pkg/tsdb/cloudwatch"
 	postgres "github.com/grafana/grafana/pkg/tsdb/grafana-postgresql-datasource"
 	pyroscope "github.com/grafana/grafana/pkg/tsdb/grafana-pyroscope-datasource"
+	rqlite "github.com/grafana/grafana/pkg/tsdb/grafana-rqlite-datasource"
 	testdatasource "github.com/grafana/grafana/pkg/tsdb/grafana-testdata-datasource"
 	"github.com/grafana/grafana/pkg/tsdb/grafanads"
 	"github.com/grafana/grafana/pkg/tsdb/graphite"
@@ -162,7 +163,8 @@ func TestIntegrationPluginManager(t *testing.T) {
 	pyroscope := pyroscope.ProvideService(hcp)
 	parca := parca.ProvideService(hcp)
 	jaeger := jaeger.ProvideService(hcp)
-	coreRegistry := coreplugin.ProvideCoreRegistry(tracing.InitializeTracerForTest(), am, cw, cm, grap, idb, lk, otsdb, pr, tmpo, td, pg, my, ms, graf, pyroscope, parca, jaeger)
+	rq := rqlite.ProvideService()
+	coreRegistry := coreplugin.ProvideCoreRegistry(tracing.InitializeTracerForTest(), am, cw, cm, grap, idb, lk, otsdb, pr, tmpo, td, pg, my, ms, graf, pyroscope, parca, jaeger, rq)
 
 	testCtx := pluginsintegration.CreateIntegrationTestCtx(t, cfg, coreRegistry)
 
@@ -255,6 +257,7 @@ func verifyCorePluginCatalogue(t *testing.T, ctx context.Context, ps *pluginstor
 		"mixed":                            {},
 		"grafana-pyroscope-datasource":     {},
 		"parca":                            {},
+		"grafana-rqlite-datasource":        {},
 	}
 
 	expApps := map[string]struct{}{

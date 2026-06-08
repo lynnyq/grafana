@@ -28,10 +28,6 @@ jest.mock('./QueryEditor/Sidebar/Sidebar', () => ({
   Sidebar: () => <div data-testid="query-editor-sidebar" />,
 }));
 
-jest.mock('../PanelEditPanelWrapper', () => ({
-  PanelEditPanelWrapper: () => <div data-testid="panel-viz" />,
-}));
-
 // Minimal mock so instanceof checks in VizAndDataPaneNext work without scene setup
 jest.mock('./PanelDataPaneNext', () => ({
   PanelDataPaneNext: class {
@@ -44,11 +40,9 @@ const MockPanelComponent = () => <div data-testid="panel-viz" />;
 function buildMockLayout(dataPane?: PanelDataPane | PanelDataPaneNext) {
   return {
     scene: {
-      panel: { Component: MockPanelComponent },
-      tableView: { Component: MockPanelComponent },
+      panelToShow: { Component: MockPanelComponent },
       controls: null,
       dataPane,
-      dashboard: {},
     },
     layout: {
       sidebarSize: SidebarSize.Mini,
